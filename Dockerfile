@@ -1,4 +1,4 @@
-FROM finchsec/kali:base as builder
+FROM debian:unstable as builder
 RUN echo "uname -m: $(uname -m)"
 # hadolint ignore=DL3005,DL3008,DL3015,DL3009,SC2046
 RUN apt-get update && \
@@ -22,7 +22,7 @@ WORKDIR /john-bin/
 RUN tar -czf /john.tar.gz ./*
 
 
-FROM finchsec/kali:base
+FROM debian:unstable-slim
 LABEL org.opencontainers.image.authors="thomas@finchsec.com"
 # hadolint ignore=DL3005,DL3008,SC2046
 RUN apt-get update && \
