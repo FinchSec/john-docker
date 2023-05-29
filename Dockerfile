@@ -1,17 +1,13 @@
 FROM debian:unstable as builder
 # hadolint ignore=DL3005,DL3008,DL3015,DL3009,SC2046
-RUN echo "uname -m: $(uname -m) * -i: $(uname -i) * -p: $(uname -p)"
-RUN echo "dpkg --print-architecture: $(dpkg --print-architecture)"
-RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources && \
-    apt update && \
-    apt show pocl-opencl-icd nvidia-opencl-dev intel-opencl-icd | grep Package:
-RUN exit 1
 RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install ca-certificates git gcc make libssl-dev zlib1g-dev yasm \
-                    $([ "$(uname -m)" != "armv7l" ] && echo pocl-opencl-icd nvidia-opencl-dev) \
-                    $([ "$(uname -m)" = "x86_64" ] && echo intel-opencl-icd) \
+    apt-get install ca-certificates git gcc make libssl-dev zlib1g-dev yasm pocl-opencl-icd \
+                    $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-dev) \
+                    $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-dev) \
+                    $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-dev intel-opencl-icd) \
+                    $([ "$(dpkg --print-architecture)" = "i386" ] && echo intel-opencl-icd) \
                     pkg-config libgmp-dev libpcap-dev libbz2-dev \
                     ocl-icd-opencl-dev opencl-headers pocl-opencl-icd libc6-dev \
                     -y --no-install-recommends
@@ -35,8 +31,8 @@ RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/deb
     apt-get update && \
     apt-get dist-upgrade -y && \
         apt-get install zlib1g libc6 nvidia-opencl-dev libgmp10 libpcap0.8 libbz2-1.0 \
-                        ocl-icd-opencl-dev opencl-headers libc6-dev \
-                        $([ "$(uname -m)" != "armv7l" ] && echo pocl-opencl-icd nvidia-opencl-dev) \
+                        ocl-icd-opencl-dev opencl-headers libc6-dev pocl-opencl-icd \
+                        $([ "$(uname -m)" != "armv7l" ] && echo nvidia-opencl-dev) \
                         $([ "$(uname -m)" = "x86_64" ] && echo intel-opencl-icd) \
                         --no-install-recommends -y && \
         apt-get autoclean && \
