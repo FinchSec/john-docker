@@ -1,5 +1,4 @@
 FROM debian:unstable as builder
-RUN echo "uname -m: $(uname -m)"
 # hadolint ignore=DL3005,DL3008,DL3015,DL3009,SC2046
 RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
