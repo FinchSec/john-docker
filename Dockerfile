@@ -1,6 +1,6 @@
 FROM debian:unstable as builder
 # hadolint ignore=DL3005,DL3008,DL3015,DL3009,SC2046
-RUN "uname -m: $(uname -m)"
+RUN echo "uname -m: $(uname -m)"
 RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources && \
     apt update && \
     apt show pocl-opencl-icd nvidia-opencl-dev intel-opencl-icd | grep Package:
