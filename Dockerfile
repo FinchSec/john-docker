@@ -11,6 +11,7 @@ RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/deb
                     pkg-config libgmp-dev libpcap-dev libbz2-dev \
                     ocl-icd-opencl-dev opencl-headers pocl-opencl-icd libc6-dev \
                     -y --no-install-recommends
+# hadolint ignore=DL3059
 RUN git clone https://github.com/openwall/john -b bleeding-jumbo john
 WORKDIR /john/src
 RUN ./configure CPPFLAGS='-DCPU_FALLBACK' --with-systemwide --enable-nt-full-unicode && make -s clean && \
