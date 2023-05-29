@@ -1,4 +1,7 @@
 FROM finchsec/kali:base as builder
+RUN echo "!armv7l:" && $([ "$(uname -m)" != "armv7l" ] && echo hashcat-utils hashcat pocl-opencl-icd)
+RUN echo "x86_64:" && $([ "$(uname -m)" = "x86_64" ] && echo intel-opencl-icd)
+RUN echo "uname -m: $(uname -m)" && exit 1
 # hadolint ignore=DL3005,DL3008,DL3015,DL3009,SC2046
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
