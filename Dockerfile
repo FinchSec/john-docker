@@ -32,9 +32,10 @@ RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/deb
     apt-get update && \
     apt-get dist-upgrade -y && \
         apt-get install zlib1g libc6 nvidia-opencl-dev libgmp10 libpcap0.8 libbz2-1.0 \
-                        ocl-icd-opencl-dev opencl-headers libc6-dev pocl-opencl-icd \
-                        $([ "$(uname -m)" != "armv7l" ] && echo nvidia-opencl-dev) \
-                        $([ "$(uname -m)" = "x86_64" ] && echo intel-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd intel-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "i386" ] && echo intel-opencl-icd) \
                         --no-install-recommends -y && \
         apt-get autoclean && \
 		rm -rf /var/lib/dpkg/status-old /var/lib/apt/lists/* && \
