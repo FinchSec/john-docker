@@ -7,7 +7,6 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
                     $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-dev) \
                     $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-dev) \
                     $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-dev intel-opencl-icd) \
-                    $([ "$(dpkg --print-architecture)" = "i386" ] && echo intel-opencl-icd) \
                     pkg-config libgmp-dev libpcap-dev libbz2-dev \
                     ocl-icd-opencl-dev opencl-headers pocl-opencl-icd libc6-dev \
                     -y --no-install-recommends
