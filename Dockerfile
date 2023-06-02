@@ -1,6 +1,6 @@
 FROM debian:unstable as builder
 # hadolint ignore=DL3005,DL3008,DL3015,DL3009,SC2046
-RUN sed -i 's/main/main non-free non-free-firmware/' /etc/apt/sources.list.d/debian.sources && \
+RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install ca-certificates git gcc make libssl-dev zlib1g-dev yasm pocl-opencl-icd \
@@ -35,7 +35,6 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
                         $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-icd) \
                         $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd) \
                         $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd intel-opencl-icd) \
-                        $([ "$(dpkg --print-architecture)" = "i386" ] && echo intel-opencl-icd) \
                         python3 ruby lua5.4 perl --no-install-recommends -y && \
         apt-get autoclean && \
 		rm -rf /var/lib/dpkg/status-old /var/lib/apt/lists/* && \
