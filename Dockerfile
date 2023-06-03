@@ -30,10 +30,10 @@ LABEL org.opencontainers.image.authors="thomas@finchsec.com"
 RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-        apt-get install zlib1g libc6 nvidia-opencl-dev libgmp10 libpcap0.8 libbz2-1.0 \
-                        $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-icd) \
-                        $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd) \
-                        $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd intel-opencl-icd) \
+        apt-get install zlib1g libc6 libgmp10 libpcap0.8 libbz2-1.0 \
+                        $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-icd nvidia-opencl-dev ) \
+                        $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev ) \
+                        $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd intel-opencl-icd nvidia-opencl-dev ) \
                         python3 ruby lua5.4 perl --no-install-recommends -y && \
         apt-get autoclean && \
 		rm -rf /var/lib/dpkg/status-old /var/lib/apt/lists/* && \
