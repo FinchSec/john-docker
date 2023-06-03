@@ -3,10 +3,13 @@ FROM debian:unstable as builder
 RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install ca-certificates git gcc make libssl-dev zlib1g-dev yasm pocl-opencl-icd \
+    apt-get install ca-certificates git gcc make libssl-dev zlib1g-dev yasm \
+                    $([ "$(dpkg --print-architecture)" = "armel" ] && echo pocl-opencl-icd) \
+                    $([ "$(dpkg --print-architecture)" = "armhf" ] && echo pocl-opencl-icd) \
                     $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-dev) \
-                    $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-dev) \
-                    $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-dev intel-opencl-icd) \
+                    $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-dev pocl-opencl-icd) \
+                    $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-dev intel-opencl-icd pocl-opencl-icd) \
+                    $([ "$(dpkg --print-architecture)" = "i386" ] && echo pocl-opencl-icd) \
                     pkg-config libgmp-dev libpcap-dev libbz2-dev \
                     ocl-icd-opencl-dev opencl-headers pocl-opencl-icd libc6-dev \
                     -y --no-install-recommends
@@ -31,9 +34,12 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
     apt-get update && \
     apt-get dist-upgrade -y && \
         apt-get install zlib1g libc6 libgmp10 libpcap0.8 libbz2-1.0 \
+                        $([ "$(dpkg --print-architecture)" = "armel" ] && echo pocl-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "armhf" ] && echo pocl-opencl-icd) \
                         $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-icd nvidia-opencl-dev ) \
-                        $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev ) \
-                        $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd intel-opencl-icd nvidia-opencl-dev ) \
+                        $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd ) \
+                        $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd intel-opencl-icd nvidia-opencl-dev pocl-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "i386" ] && echo pocl-opencl-icd) \
                         python3 ruby lua5.4 perl --no-install-recommends -y && \
         apt-get autoclean && \
 		rm -rf /var/lib/dpkg/status-old /var/lib/apt/lists/* && \
