@@ -16,7 +16,7 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
 # hadolint ignore=DL3059
 RUN git clone https://github.com/openwall/john -b bleeding-jumbo john
 WORKDIR /john/src
-RUN ./configure CPPFLAGS='-DCPU_FALLBACK' --with-systemwide --enable-nt-full-unicode && make -s clean && \
+RUN ./configure --with-systemwide --enable-nt-full-unicode && make -s clean && \
     make && \
     make install
 
