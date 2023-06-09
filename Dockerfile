@@ -37,10 +37,9 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
         apt-get install zlib1g libc6 libgmp10 libpcap0.8 libbz2-1.0 \
                         $([ "$(dpkg --print-architecture)" = "armel" ] && echo pocl-opencl-icd) \
                         $([ "$(dpkg --print-architecture)" = "armhf" ] && echo pocl-opencl-icd) \
-                        $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-icd nvidia-opencl-dev ) \
                         $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd ) \
                         $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd intel-opencl-icd nvidia-opencl-dev pocl-opencl-icd) \
-                        $([ "$(dpkg --print-architecture)" = "i386" ] && echo pocl-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "i386" ] && echo nvidia-opencl-icd pocl-opencl-icd) \
                         python3 ruby lua5.4 perl --no-install-recommends -y && \
         apt-get autoclean && \
 		rm -rf /var/lib/dpkg/status-old /var/lib/apt/lists/* && \
