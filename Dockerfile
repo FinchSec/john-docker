@@ -39,6 +39,7 @@ LABEL org.opencontainers.image.authors="thomas@finchsec.com"
 # hadolint ignore=DL3005,DL3008,SC2046
 RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
+    apt-mark hold dash && \
     apt-get dist-upgrade -y && \
         apt-get install zlib1g libc6 libgmp10 libpcap0.8 libbz2-1.0 \
                         $([ "$(dpkg --print-architecture)" = "armel" ] && echo pocl-opencl-icd) \
