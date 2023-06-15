@@ -1,7 +1,10 @@
 FROM debian:unstable as builder
+# "apt-mark hold dash" is a temporary workaround due to dash/0.5.12-2
+# to dash/0.5.12-4 update which results in a dpkg failure (in dist-upgrade)
 # hadolint ignore=DL3005,DL3008,DL3015,DL3009,SC2046
 RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
+    apt-mark hold dash && \
     apt-get dist-upgrade -y && \
     apt-get install ca-certificates git gcc make libssl-dev zlib1g-dev yasm \
                     $([ "$(dpkg --print-architecture)" = "armel" ] && echo pocl-opencl-icd pocl-opencl-icd ocl-icd-opencl-dev) \
