@@ -8,7 +8,7 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
                     $([ "$(dpkg --print-architecture)" = "armhf" ] && echo pocl-opencl-icd pocl-opencl-icd ocl-icd-opencl-dev) \
                     $([ "$(dpkg --print-architecture)" = "ppc64el" ] && echo nvidia-opencl-dev ocl-icd-opencl-dev) \
                     $([ "$(dpkg --print-architecture)" = "arm64" ] && echo ocl-icd-opencl-dev nvidia-opencl-dev pocl-opencl-icd) \
-                    $([ "$(dpkg --print-architecture)" = "amd64" ] && echo pocl-opencl-icd ocl-icd-opencl-dev nvidia-opencl-dev intel-opencl-icd pocl-opencl-icd) \
+                    $([ "$(dpkg --print-architecture)" = "amd64" ] && echo pocl-opencl-icd ocl-icd-opencl-dev nvidia-opencl-dev pocl-opencl-icd) \
                     $([ "$(dpkg --print-architecture)" = "i386" ] && echo pocl-opencl-icd pocl-opencl-icd) \
                     $([ "$(dpkg --print-architecture)" = "riscv64" ] && echo ocl-icd-opencl-dev) \
                     $([ "$(dpkg --print-architecture)" = "s390x" ] && echo ocl-icd-opencl-dev) \
