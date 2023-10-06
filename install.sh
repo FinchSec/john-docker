@@ -47,6 +47,7 @@ mv /john/run/opencl /john-bin/usr/local/bin
 mv /john/run/benchmark-unify /john-bin/usr/local/bin
 mv /john/run/makechr /john-bin/usr/local/bin
 mv /john/run/relbench /john-bin/usr/local/bin
+mv /john/run/ccl_chrome_indexeddb /john-bin/usr/share/
 
 chmod +x /john-bin/usr/local/bin/*
 
