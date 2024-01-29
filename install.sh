@@ -14,7 +14,6 @@ mv /john/run/*.lst /john-bin/usr/share/
 mv /john/run/*.pl /john-bin/usr/local/bin/
 mv /john/run/*.py /john-bin/usr/local/bin/
 mv /john/run/dictionary.rfc2865 /john-bin/usr/share
-mv /john/run/oui.txt /john-bin/usr/share
 mv /john/run/dns /john-bin/usr/share/
 mv /john/run/*.chr /john-bin/usr/share/
 mv /john/run/*.js /john-bin/usr/share/
