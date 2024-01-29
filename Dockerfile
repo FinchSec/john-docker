@@ -12,7 +12,7 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
                     $([ "$(dpkg --print-architecture)" = "i386" ] && echo pocl-opencl-icd pocl-opencl-icd) \
                     $([ "$(dpkg --print-architecture)" = "riscv64" ] && echo ocl-icd-opencl-dev) \
                     $([ "$(dpkg --print-architecture)" = "s390x" ] && echo ocl-icd-opencl-dev) \
-                    pkg-config libgmp-dev libpcap-dev libbz2-dev opencl-headers libc6-dev \
+                    pkg-config libgmp-dev libpcap-dev libbz2-dev opencl-headers libc6-dev libssl-dev \
                     -y --no-install-recommends
 # hadolint ignore=DL3059
 RUN git clone https://github.com/openwall/john -b bleeding-jumbo john
@@ -43,7 +43,7 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
                         $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd ) \
                         $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd) \
                         $([ "$(dpkg --print-architecture)" = "i386" ] && echo nvidia-opencl-icd pocl-opencl-icd) \
-                        python3 ruby lua5.4 perl --no-install-recommends -y && \
+                        python3 ruby lua5.4 perl libssl3 --no-install-recommends -y && \
         apt-get autoclean && \
 		rm -rf /var/lib/dpkg/status-old /var/lib/apt/lists/* && \
         mkdir -p /root/.john/opencl
