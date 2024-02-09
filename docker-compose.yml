@@ -1,0 +1,5 @@
+services:
+    john:
+        stdin_open: true
+        tty: true
+        image: finchsec/john
