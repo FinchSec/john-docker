@@ -43,9 +43,7 @@ RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.li
                         $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd ) \
                         $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd) \
                         $([ "$(dpkg --print-architecture)" = "i386" ] && echo nvidia-opencl-icd pocl-opencl-icd) \
-                        $([ "$(dpkg --print-architecture)" = "s390x" ] && echo libssl3) \
-                        $([ "$(dpkg --print-architecture)" != "s390x" ] && echo libssl3t64) \
-                        python3 ruby lua5.4 perl --no-install-recommends -y && \
+                        python3 ruby lua5.4 perl libssl3t64 --no-install-recommends -y && \
         apt-get autoclean && \
 		rm -rf /var/lib/dpkg/status-old /var/lib/apt/lists/* && \
         mkdir -p /root/.john/opencl
