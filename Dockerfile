@@ -37,11 +37,13 @@ LABEL org.opencontainers.image.authors="thomas@finchsec.com"
 RUN sed -i 's/main/main non-free non-free-firmware contrib/' /etc/apt/sources.list.d/debian.sources && \
     apt-get update && \
     apt-get dist-upgrade -y && \
-        apt-get install zlib1g libc6 libgmp10 libpcap0.8 libbz2-1.0 \
+        apt-get install zlib1g libc6 libgmp10 libbz2-1.0 \
+                        $([ -n "$(dpkg --print-architecture | grep -E 'arm(el|hf)')" ] && echo libpcap0.8t64) \
+                        $([ -z "$(dpkg --print-architecture | grep -E 'arm(el|hf)')" ] && echo libpcap0.8) \
                         $([ "$(dpkg --print-architecture)" = "armel" ] && echo pocl-opencl-icd) \
                         $([ "$(dpkg --print-architecture)" = "armhf" ] && echo pocl-opencl-icd) \
-                        $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd ) \
-                        $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd) \
+                        $([ "$(dpkg --print-architecture)" = "arm64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd libpcap0.8) \
+                        $([ "$(dpkg --print-architecture)" = "amd64" ] && echo nvidia-opencl-icd nvidia-opencl-dev pocl-opencl-icd libpcap0.8) \
                         $([ "$(dpkg --print-architecture)" = "i386" ] && echo nvidia-opencl-icd pocl-opencl-icd) \
                         python3 ruby lua5.4 perl libssl3t64 --no-install-recommends -y && \
         apt-get autoclean && \
